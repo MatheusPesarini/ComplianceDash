@@ -1,22 +1,19 @@
+from functools import lru_cache
+
 from fastapi import FastAPI
-from pydantic import BaseModel
 
-app = FastAPI()
+from app.core import config
+from app.core.database import engine
+from sqlalchemy import text
 
-class Item(BaseModel):
-    name: str
-    price: float
-    is_offer: bool | None = None
+app = FastAPI(title="FastAPI Example", description="A simple FastAPI application", version="1.0.0")
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+@lru_cache
+def get_settings():
+    return config.settings
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str | None = None):
-    return {"item_id": item_id, "q": q}
-
-@app.put("/items/{item_id}")
-def update_item(item_id: int, item: Item):
-    return {"item_name": item.name, "item_id": item_id}
-
+@app.on_event("startup")
+def test_connection():
+    with engine.connect() as conn:
+        conn.execute(text("SELECT 1"))
+    print("\n✅ BANCO DE DADOS CONECTADO COM SUCESSO!\n")
