@@ -22,7 +22,8 @@ class Equipament(Base):
     
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     category: Mapped[str] = mapped_column(String(50), nullable=False)
-    model_brand: Mapped[str] = mapped_column(String(100), nullable=False)
+    model: Mapped[str] = mapped_column(String(100), nullable=False)
+    brand: Mapped[str] = mapped_column(String(100), nullable=False)
     service: Mapped[str] = mapped_column(String(200), nullable=False)
     
     client_id: Mapped[int] = mapped_column(ForeignKey("clients.id"), nullable=False)
@@ -30,4 +31,4 @@ class Equipament(Base):
     proprietary: Mapped["Client"] = relationship(back_populates="equipaments")
     
     def __repr__(self) -> str:
-        return f"<Equipament id={self.id} category='{self.category}' model_brand='{self.model_brand}' service='{self.service}'>"
+        return f"<Equipament id={self.id} category='{self.category}' model='{self.model}' brand='{self.brand}' service='{self.service}'>"

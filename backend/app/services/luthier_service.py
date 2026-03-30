@@ -1,38 +1,34 @@
+from typing import List
 from sqlalchemy.orm import Session
 
-from app.models.luthier_model import Address, User
+from app.models.luthier_model import Client, Equipament
 from app.repositories.luthier_repository import UserRepository
-from app.schemas.luthier_schema import AddressCreate, UserCreate
+from app.schemas.luthier_schema import ClientCreate, EquipamentCreate 
 
 class UserService:
     def __init__(self, db: Session):
         self.repository = UserRepository(db)
         
-    def create_user(self, user_data: UserCreate) -> User:
-        new_user = User(name=user_data.name, fullname=user_data.fullname)
-        return self.repository.create(new_user)
+    def create_client(self, client_data: ClientCreate) -> Client:
+        new_client = Client(name=client_data.name, telephone=client_data.telephone, email=client_data.email)
+        return self.repository.create_client(new_client)
     
-    def get_user(self, user_id: int) -> User:
-        user = self.repository.get_by_id(user_id)
-        if not user:
-            raise ValueError(f"Usuário com ID {user_id} não encontrado")
-        return user
+    def get_client(self, client_id: int) -> Client:
+        client = self.repository.get_client_by_id(client_id)
+        if not client:
+            raise ValueError(f"Cliente com ID {client_id} não encontrado")
+        return client
     
-    def create_user_address(self, address_data: AddressCreate, user_id: int) -> Address:
-        self.get_user(user_id)
+    def create_equipament(self, equipament_data: EquipamentCreate, client_id: int) -> Equipament:
+        self.get_client(client_id)
         
-        existing_address = self.repository.get_address_by_user_id(user_id)
-        if existing_address:
-            raise ValueError(f"O usuário com ID {user_id} já tem endereço de email")
+        existing_equipament = self.repository.get_equipaments_by_user_id(client_id)
+        if existing_equipament:
+            raise ValueError(f"O cliente com ID {client_id} já tem um equipamento registrado")
         
-        new_address = Address(email_address=address_data.email_address)
-        return self.repository.create_address(new_address, user_id)
+        new_equipament = Equipament(category=equipament_data.category, brand=equipament_data.brand, model=equipament_data.model, service=equipament_data.service)
+        return self.repository.create_equipament(new_equipament, client_id)
 
-    def get_user_address(self, user_id: int) -> Address:
-        self.get_user(user_id)
-        
-        existing_address = self.repository.get_address_by_user_id(user_id)
-        if not existing_address:
-            raise ValueError(f"O usuário com ID {user_id} não tem endereço de email")
-        
-        return existing_address
+    def get_client_equipaments(self, client_id: int) -> List[Equipament]:
+        self.get_client(client_id)
+        return self.repository.get_equipaments_by_user_id(client_id)

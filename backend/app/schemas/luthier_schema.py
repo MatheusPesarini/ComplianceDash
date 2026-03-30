@@ -20,14 +20,16 @@ class ClientResponse(BaseModel):
 # Address
 class EquipamentCreate(BaseModel):
     category: str
-    model_brand: str
+    model: str
+    brand: str
     service: str
     client_id: int
     
 class EquipamentResponse(BaseModel):
     id: int
     category: str
-    model_brand: str
+    model: str
+    brand: str
     service: str
     client_id: int
     

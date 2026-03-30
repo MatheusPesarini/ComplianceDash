@@ -1,29 +1,30 @@
+from typing import List
 from sqlalchemy.orm import Session
 from sqlalchemy import select
-from app.models.luthier_model import User, Address
+from app.models.luthier_model import Client, Equipament
 
 class UserRepository:
     def __init__(self, db: Session):
         self.db = db
         
-    def get_by_id(self, user_id: int) -> User | None:
-        stmt = select(User).where(User.id == user_id)
+    def get_client_by_id(self, client_id: int) -> Client | None:
+        stmt = select(Client).where(Client.id == client_id)
         return self.db.scalar(stmt)
     
-    def create(self, user: User) -> User:
-        self.db.add(user)
+    def create_client(self, client: Client) -> Client:
+        self.db.add(client)
         self.db.commit()
-        self.db.refresh(user)
-        return user
+        self.db.refresh(client)
+        return client
     
-    def get_address_by_user_id(self, user_id: int) -> Address | None:
-        stmt = select(Address).where(Address.user_id == user_id)
-        return self.db.scalar(stmt)
+    def get_equipaments_by_user_id(self, client_id: int) -> List[Equipament]:
+        stmt = select(Equipament).where(Equipament.client_id == client_id)
+        return list(self.db.scalars(stmt).all())
     
-    def create_address(self, address: Address, user_id: int) -> Address:
-        address.user_id = user_id
-        self.db.add(address)
+    def create_equipament(self, equipament: Equipament, client_id: int) -> Equipament:
+        equipament.client_id = client_id
+        self.db.add(equipament)
         self.db.commit()
-        self.db.refresh(address)
-        return address
+        self.db.refresh(equipament)
+        return equipament
         
