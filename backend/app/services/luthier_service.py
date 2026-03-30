@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 
-from app.models.user import Address, User
-from app.repositories.user_repository import UserRepository
-from app.schemas.user_schema import AddressCreate, UserCreate
+from app.models.luthier_model import Address, User
+from app.repositories.luthier_repository import UserRepository
+from app.schemas.luthier_schema import AddressCreate, UserCreate
 
 class UserService:
     def __init__(self, db: Session):

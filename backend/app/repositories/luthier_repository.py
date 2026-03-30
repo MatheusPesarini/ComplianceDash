@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select
-from app.models.user import User, Address
+from app.models.luthier_model import User, Address
 
 class UserRepository:
     def __init__(self, db: Session):
