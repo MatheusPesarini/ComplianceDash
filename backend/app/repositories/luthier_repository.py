@@ -7,6 +7,10 @@ class UserRepository:
     def __init__(self, db: Session):
         self.db = db
         
+    def get_client_by_email(self, email: str) -> Client | None:
+        stmt = select(Client).where(Client.email == email)
+        return self.db.scalar(stmt)
+        
     def get_client_by_id(self, client_id: int) -> Client | None:
         stmt = select(Client).where(Client.id == client_id)
         return self.db.scalar(stmt)
@@ -23,6 +27,16 @@ class UserRepository:
     
     def create_equipament(self, equipament: Equipament, client_id: int) -> Equipament:
         equipament.client_id = client_id
+        self.db.add(equipament)
+        self.db.commit()
+        self.db.refresh(equipament)
+        return equipament
+    
+    def get_equipament_by_id(self, equipament_id: int) -> Equipament | None:
+        stmt = select(Equipament).where(Equipament.id == equipament_id)
+        return self.db.scalar(stmt)
+    
+    def update_equipament(self, equipament: Equipament) -> Equipament:
         self.db.add(equipament)
         self.db.commit()
         self.db.refresh(equipament)
