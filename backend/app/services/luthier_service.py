@@ -13,7 +13,7 @@ class UserService:
     def create_client(self, client_data: ClientCreate) -> Client:
         hashed_password = generate_hashed_password(client_data.password)
         
-        new_client = Client(name=client_data.name, telephone=client_data.telephone, email=client_data.email, password=hashed_password)
+        new_client = Client(name=client_data.name, telephone=client_data.telephone, email=client_data.email, hashed_password=hashed_password)
         
         return self.repository.create_client(new_client)
     
