@@ -42,8 +42,10 @@ def get_equipaments(client_id: int, db: Session = Depends(get_db)):
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
     
-@router.post("/{client_id}/equipaments/update", response_model=None, status_code=201)
-def update_equipament(client_id: int, equipament_in: EquipamentUpdate, db: Session = Depends(get_db)):
+@router.post("/{client_id}/equipaments/{equipament_id}", response_model=None, status_code=201)
+def update_equipament(equipament_id: int, equipament_in: EquipamentUpdate, db: Session = Depends(get_db)):
     service = UserService(db)
+    return service.update_equipament(equipament_id, equipament_in)
+        
     
     
