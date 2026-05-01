@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { ConfigProvider } from 'antd'
+import ptBR from 'antd/locale/pt_BR'
 
 const router = createBrowserRouter([
   {
@@ -13,6 +15,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ConfigProvider locale={ptBR} theme={{ token: { colorPrimary: '#1677ff' } }}>
+      <RouterProvider router={router} />
+    </ConfigProvider>
   </StrictMode>,
 )
