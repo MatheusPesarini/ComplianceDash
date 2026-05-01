@@ -1,9 +1,11 @@
+import { Outlet } from "react-router-dom"
+import { ConfigProvider } from "antd"
+import ptBR from "antd/locale/pt_BR"
+
 export default function App() {
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-    </div>
+    <ConfigProvider locale={ptBR} theme={{ token: { colorPrimary: '#1677ff' } }}>
+      <Outlet />
+    </ConfigProvider>
   )
 }

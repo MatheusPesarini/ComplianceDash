@@ -3,20 +3,29 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { ConfigProvider } from 'antd'
-import ptBR from 'antd/locale/pt_BR'
+import AuthLayout from './layouts/AuthLayout'
+import LoginPage from './pages/Login/index.tsx'
+import RegisterPage from './pages/Register/index.tsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-  },
+    children: [
+      {
+        element: <AuthLayout />,
+        children: [
+          { path: 'login', element: <LoginPage /> },
+
+          { path: 'register', element: <RegisterPage /> },
+        ]
+      }
+    ]
+  }
 ])
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ConfigProvider locale={ptBR} theme={{ token: { colorPrimary: '#1677ff' } }}>
-      <RouterProvider router={router} />
-    </ConfigProvider>
+    <RouterProvider router={router} />
   </StrictMode>,
 )
