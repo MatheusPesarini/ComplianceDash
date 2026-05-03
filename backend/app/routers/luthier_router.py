@@ -2,47 +2,47 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.schemas.luthier_schema import ClientCreate, ClientCreateResponse, ClientLogin, EquipamentCreate, EquipamentResponse, EquipamentUpdate
+from app.schemas.luthier_schema import userCreate, userCreateResponse, userLogin, EquipamentCreate, EquipamentResponse, EquipamentUpdate
 from app.services.luthier_service import UserService
 
 
-router = APIRouter(prefix="/clients", tags=["Clients"])
+router = APIRouter(prefix="/users", tags=["users"])
 
-@router.post("/", response_model=ClientCreateResponse, status_code=201)
-def create_client(client_in: ClientCreate, db: Session = Depends(get_db)):
+@router.post("/register", response_model=userCreateResponse, status_code=201)
+def create_user(user_in: userCreate, db: Session = Depends(get_db)):
     service = UserService(db)
-    return service.create_client(client_in)
+    return service.create_user(user_in)
 
-@router.post("/loginClient", response_model=None, status_code=201)
-def login_client(client_in: ClientLogin, db: Session = Depends(get_db)):
+@router.post("/login", response_model=None, status_code=201)
+def login_user(user_in: userLogin, db: Session = Depends(get_db)):
     service = UserService(db)
-    return service.login_client(client_in)
+    return service.login_user(user_in)
 
-@router.get("/{client_id}", response_model=ClientCreateResponse)
-def read_client(client_id: int, db: Session = Depends(get_db)):
+@router.get("/user/{user_id}", response_model=userCreateResponse)
+def read_user(user_id: int, db: Session = Depends(get_db)):
     service = UserService(db)
     try:
-        user = service.get_client(client_id)
+        user = service.get_user(user_id)
         return user
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
-@router.post("/{client_id}/equipaments", response_model=EquipamentResponse, status_code=201)
-def create_equipament(client_id: int, equipament_in: EquipamentCreate, db: Session = Depends(get_db)):
+@router.post("/{user_id}/equipaments", response_model=EquipamentResponse, status_code=201)
+def create_equipament(user_id: int, equipament_in: EquipamentCreate, db: Session = Depends(get_db)):
     service = UserService(db)
-    return service.create_equipament(equipament_in, client_id)
+    return service.create_equipament(equipament_in, user_id)
 
-@router.get("/{client_id}/equipaments", response_model=EquipamentResponse)
-def get_equipaments(client_id: int, db: Session = Depends(get_db)):
+@router.get("/{user_id}/equipaments", response_model=EquipamentResponse)
+def get_equipaments(user_id: int, db: Session = Depends(get_db)):
     service = UserService(db)
     
     try:
-        equipaments = service.get_client_equipaments(client_id)
+        equipaments = service.get_user_equipaments(user_id)
         return equipaments
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
-    
-@router.post("/{client_id}/equipaments/{equipament_id}", response_model=None, status_code=201)
+
+@router.put("/{user_id}/equipaments/{equipament_id}", response_model=None, status_code=201)
 def update_equipament(equipament_id: int, equipament_in: EquipamentUpdate, db: Session = Depends(get_db)):
     service = UserService(db)
     return service.update_equipament(equipament_id, equipament_in)

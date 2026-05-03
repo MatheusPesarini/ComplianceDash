@@ -38,21 +38,24 @@ class EquipamentUpdate(BaseModel):
     notes: Optional[str] = None
     expected_delivery_date: Optional[datetime] = None
     
-# Client
-class ClientCreate(BaseModel):
+# User
+class UserCreate(BaseModel):
     name: str
-    telephone: str
     email: str
     password: str
-    
-class ClientLogin(BaseModel):
-    email: str
-    password: str
-    
-class ClientCreateResponse(BaseModel):
-    id: int
-    created_at: datetime
-    equipaments: List[EquipamentResponse] = []
+    phone: str
+class UserCreateResponse(BaseModel):
+    successful: bool
+    error_message: Optional[str] = None
     
     model_config = ConfigDict(from_attributes=True)
     
+class UserLogin(BaseModel):
+    email: str
+    password: str
+    
+class UserLoginResponse(BaseModel):
+    successful: bool
+    error_message: Optional[str] = None
+    
+    model_config = ConfigDict(from_attributes=True)
