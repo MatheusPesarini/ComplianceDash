@@ -10,7 +10,7 @@ class EquipamentCreate(BaseModel):
     model: str
     brand: str
     service: str
-    client_id: int
+    user_id: int
     status: Optional[ServiceStatus] = ServiceStatus.PENDING
     price: Optional[float] = None
     notes: Optional[str] = None
@@ -22,7 +22,7 @@ class EquipamentResponse(BaseModel):
     model: str
     brand: str
     service: str
-    client_id: int
+    user_id: int
     status: Optional[ServiceStatus] = ServiceStatus.PENDING
     price: Optional[float] = None
     notes: Optional[str] = None
@@ -44,6 +44,7 @@ class UserCreate(BaseModel):
     email: str
     password: str
     phone: str
+    
 class UserCreateResponse(BaseModel):
     successful: bool
     error_message: Optional[str] = None

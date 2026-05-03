@@ -1,23 +1,23 @@
 from typing import List
 from sqlalchemy.orm import Session
 
-from app.core.security import generate_hashed_password, verify_password
-from app.models.luthier_model import user, Equipament
+from app.core.password_hash import generate_hashed_password, verify_password
+from app.models.luthier_model import User, Equipament
 from app.repositories.luthier_repository import UserRepository
-from app.schemas.luthier_schema import userCreate, userLogin, EquipamentCreate, EquipamentUpdate 
+from app.schemas.luthier_schema import UserCreate, UserLogin, EquipamentCreate, EquipamentUpdate 
 
 class UserService:
     def __init__(self, db: Session):
         self.repository = UserRepository(db)
         
-    def create_user(self, user_data: userCreate) -> user:
+    def create_user(self, user_data: UserCreate) -> User:
         hashed_password = generate_hashed_password(user_data.password)
         
-        new_user = user(name=user_data.name, telephone=user_data.telephone, email=user_data.email, hashed_password=hashed_password)
+        new_user = User(name=user_data.name, phone=user_data.phone, email=user_data.email, hashed_password=hashed_password)
         
         return self.repository.create_user(new_user)
     
-    def get_user(self, user_id: int) -> user:
+    def get_user(self, user_id: int) -> User:
         user = self.repository.get_user_by_id(user_id)
         
         if not user:
@@ -25,7 +25,7 @@ class UserService:
         
         return user
     
-    def login_user(self, user_data: userLogin) -> user:
+    def login_user(self, user_data: UserLogin) -> User:
         user = self.repository.get_user_by_email(user_data.email)
         
         if not user:

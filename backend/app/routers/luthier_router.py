@@ -2,23 +2,23 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.schemas.luthier_schema import userCreate, userCreateResponse, userLogin, EquipamentCreate, EquipamentResponse, EquipamentUpdate
+from app.schemas.luthier_schema import UserCreate, UserCreateResponse, UserLogin, EquipamentCreate, EquipamentResponse, EquipamentUpdate
 from app.services.luthier_service import UserService
 
 
-router = APIRouter(prefix="/users", tags=["users"])
+router = APIRouter(prefix="/api", tags=["users"])
 
-@router.post("/register", response_model=userCreateResponse, status_code=201)
-def create_user(user_in: userCreate, db: Session = Depends(get_db)):
+@router.post("/register", response_model=UserCreateResponse, status_code=201)
+def create_user(user_in: UserCreate, db: Session = Depends(get_db)):
     service = UserService(db)
     return service.create_user(user_in)
 
 @router.post("/login", response_model=None, status_code=201)
-def login_user(user_in: userLogin, db: Session = Depends(get_db)):
+def login_user(user_in: UserLogin, db: Session = Depends(get_db)):
     service = UserService(db)
     return service.login_user(user_in)
 
-@router.get("/user/{user_id}", response_model=userCreateResponse)
+@router.get("/user/{user_id}", response_model=UserCreateResponse)
 def read_user(user_id: int, db: Session = Depends(get_db)):
     service = UserService(db)
     try:

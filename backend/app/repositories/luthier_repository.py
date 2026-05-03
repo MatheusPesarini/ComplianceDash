@@ -1,32 +1,32 @@
 from typing import List
 from sqlalchemy.orm import Session
 from sqlalchemy import select
-from app.models.luthier_model import Client, Equipament
+from app.models.luthier_model import User, Equipament
 
 class UserRepository:
     def __init__(self, db: Session):
         self.db = db
         
-    def get_client_by_email(self, email: str) -> Client | None:
-        stmt = select(Client).where(Client.email == email)
+    def get_user_by_email(self, email: str) -> User | None:
+        stmt = select(User).where(User.email == email)
         return self.db.scalar(stmt)
         
-    def get_client_by_id(self, client_id: int) -> Client | None:
-        stmt = select(Client).where(Client.id == client_id)
+    def get_user_by_id(self, user_id: int) -> User | None:
+        stmt = select(User).where(User.id == user_id)
         return self.db.scalar(stmt)
     
-    def create_client(self, client: Client) -> Client:
-        self.db.add(client)
+    def create_user(self, user: User) -> User:
+        self.db.add(user)
         self.db.commit()
-        self.db.refresh(client)
-        return client
+        self.db.refresh(user)
+        return user
     
-    def get_equipaments_by_user_id(self, client_id: int) -> List[Equipament]:
-        stmt = select(Equipament).where(Equipament.client_id == client_id)
+    def get_equipaments_by_user_id(self, user_id: int) -> List[Equipament]:
+        stmt = select(Equipament).where(Equipament.user_id == user_id)
         return list(self.db.scalars(stmt).all())
     
-    def create_equipament(self, equipament: Equipament, client_id: int) -> Equipament:
-        equipament.client_id = client_id
+    def create_equipament(self, equipament: Equipament, user_id: int) -> Equipament:
+        equipament.user_id = user_id
         self.db.add(equipament)
         self.db.commit()
         self.db.refresh(equipament)
