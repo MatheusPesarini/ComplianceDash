@@ -1,5 +1,5 @@
 import { Card, Form, Button, Input, message } from 'antd';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { CreateUser } from '../../services/auth/CreateUser';
 import type { RegisterRequest } from '../../types/Auth';
 import { useNavigate } from 'react-router-dom';
@@ -7,15 +7,12 @@ import { useNavigate } from 'react-router-dom';
 
 export default function RegisterPage() {
   const [form] = Form.useForm();
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: CreateUser,
     onSuccess: () => {
       message.success('User created with success!');
-
-      queryClient.invalidateQueries({ queryKey: ['users'] });
 
       navigate('/login');
     },
