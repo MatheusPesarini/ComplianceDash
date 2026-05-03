@@ -38,7 +38,7 @@ export default function RegisterPage() {
           </Form.Item>
 
           <Form.Item label='Password' name='password' rules={[{ required: true, message: 'Password is obrigatory!' }]}>
-            <Input.Password placeholder='Write your password' size='large' maxLength={25} />
+            <Input.Password placeholder='Write your password' size='large' minLength={3} maxLength={25} />
           </Form.Item>
 
           <Form.Item label='Phone' name='phone' rules={[{ required: true, message: 'Phone is obrigatory!' }]}>
