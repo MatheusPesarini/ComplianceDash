@@ -1,43 +1,18 @@
 from typing import List
 from sqlalchemy.orm import Session
 
-from app.core.password_hash import generate_hashed_password, verify_password
-from app.models.luthier_model import User, Equipament
-from app.repositories.luthier_repository import UserRepository
-from app.schemas.luthier_schema import UserCreate, UserLogin, EquipamentCreate, EquipamentUpdate 
+from app.models.equipament_model import Equipament
+from app.repositories.equipament_repository import EquipamentRepository
+from app.schemas.equipament_schema import EquipamentCreate, EquipamentUpdate
+from app.services.user_service import UserService
 
-class UserService:
+class EquipamentService:
     def __init__(self, db: Session):
-        self.repository = UserRepository(db)
+        self.repository = EquipamentRepository(db)
+        self.user_service = UserService(db)
         
-    def create_user(self, user_data: UserCreate) -> User:
-        hashed_password = generate_hashed_password(user_data.password)
-        
-        new_user = User(name=user_data.name, phone=user_data.phone, email=user_data.email, hashed_password=hashed_password)
-        
-        return self.repository.create_user(new_user)
-    
-    def get_user(self, user_id: int) -> User:
-        user = self.repository.get_user_by_id(user_id)
-        
-        if not user:
-            raise ValueError(f"usere com ID {user_id} não encontrado")
-        
-        return user
-    
-    def login_user(self, user_data: UserLogin) -> User:
-        user = self.repository.get_user_by_email(user_data.email)
-        
-        if not user:
-            raise ValueError("Credenciais inválidas")
-        
-        if not verify_password(user_data.password, user.hashed_password):
-            raise ValueError("Credenciais inválidas")
-        
-        return user
-    
     def create_equipament(self, equipament_data: EquipamentCreate, user_id: int) -> Equipament:
-        self.get_user(user_id)
+        self.user_service.get_user(user_id)
         
         existing_equipament = self.repository.get_equipaments_by_user_id(user_id)
         if existing_equipament:
@@ -49,7 +24,7 @@ class UserService:
         return self.repository.create_equipament(new_equipament, user_id)
 
     def get_user_equipaments(self, user_id: int) -> List[Equipament]:
-        self.get_user(user_id)
+        self.user_service.get_user(user_id)
         return self.repository.get_equipaments_by_user_id(user_id)
     
     def update_equipament(self, equipament_id: int, update_data: EquipamentUpdate) -> Equipament:

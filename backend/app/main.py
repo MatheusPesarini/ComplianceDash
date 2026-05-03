@@ -4,7 +4,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core import config
-from app.routers import luthier_router
+from app.routers import user_router
+from app.routers import equipament_router
 
 app = FastAPI(title="FastAPI Example", description="A simple FastAPI application", version="1.0.0")
 
@@ -20,7 +21,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(luthier_router.router)
+app.include_router(user_router.router)
+app.include_router(equipament_router.router)
 
 @lru_cache
 def get_settings():

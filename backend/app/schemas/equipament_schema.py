@@ -1,10 +1,8 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Optional
 from pydantic import BaseModel, ConfigDict
+from app.models.equipament_model import ServiceStatus
 
-from app.models.luthier_model import ServiceStatus
-
-# Equipament
 class EquipamentCreate(BaseModel):
     category: str
     model: str
@@ -37,26 +35,3 @@ class EquipamentUpdate(BaseModel):
     price: Optional[float] = None
     notes: Optional[str] = None
     expected_delivery_date: Optional[datetime] = None
-    
-# User
-class UserCreate(BaseModel):
-    name: str
-    email: str
-    password: str
-    phone: str
-    
-class UserCreateResponse(BaseModel):
-    successful: bool
-    error_message: Optional[str] = None
-    
-    model_config = ConfigDict(from_attributes=True)
-    
-class UserLogin(BaseModel):
-    email: str
-    password: str
-    
-class UserLoginResponse(BaseModel):
-    successful: bool
-    error_message: Optional[str] = None
-    
-    model_config = ConfigDict(from_attributes=True)
