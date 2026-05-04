@@ -1,2 +1,3 @@
 from app.core.database import Base
-from app.models.luthier_model import User, Equipament
+from app.models.user_model import User
+from app.models.privacy_request_model import PrivacyRequest

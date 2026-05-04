@@ -27,9 +27,11 @@ def create_user(user_in: UserCreate, db: Session = Depends(get_db)):
 def login_user(user_in: UserLogin, db: Session = Depends(get_db)):
     service = UserService(db)
     try:
-        service.login_user(user_in) 
-        token = create_acess_token()
-        return UserLoginResponse(successful=True)
+        user = service.login_user(user_in) 
+        
+        token = create_acess_token({"sub": str(user.id)})
+        
+        return UserLoginResponse(successful=True, token=token, user_id=str(user.id))
     except ValueError as e:
         # ValueError = "Credenciais inválidas"
         return UserLoginResponse(successful=False, error_message=str(e))
