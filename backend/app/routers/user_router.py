@@ -5,6 +5,8 @@ from sqlalchemy.exc import IntegrityError
 from app.core.database import get_db
 from app.schemas.user_schema import UserCreate, UserCreateResponse, UserLogin, UserLoginResponse
 from app.services.user_service import UserService
+from app.core.token_jwt import create_acess_token, verify_token
+
 
 router = APIRouter(prefix="/api", tags=["users"])
 
@@ -26,6 +28,7 @@ def login_user(user_in: UserLogin, db: Session = Depends(get_db)):
     service = UserService(db)
     try:
         service.login_user(user_in) 
+        token = create_acess_token()
         return UserLoginResponse(successful=True)
     except ValueError as e:
         # ValueError = "Credenciais inválidas"

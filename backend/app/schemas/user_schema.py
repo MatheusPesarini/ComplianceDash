@@ -19,6 +19,8 @@ class UserLogin(BaseModel):
     
 class UserLoginResponse(BaseModel):
     successful: bool
+    user_id: str
     error_message: Optional[str] = None
+    jwt_token: Optional[str] = None
     
     model_config = ConfigDict(from_attributes=True)
