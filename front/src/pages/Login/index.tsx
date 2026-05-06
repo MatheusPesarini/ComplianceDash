@@ -2,7 +2,7 @@ import { Card, Checkbox, Form, Button, Input, message } from 'antd';
 import { useMutation } from '@tanstack/react-query';
 import { LoginUser } from '../../services/auth/LoginUser';
 import type { LoginRequest } from '../../types/Auth';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../stores/authStore';
 
 export default function LoginPage() {
@@ -10,13 +10,14 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   const setAuth = useAuthStore((state) => state.setAuth);
+  const jwt_token = useAuthStore((state) => state.jwt_token);
 
   const mutation = useMutation({
     mutationFn: LoginUser,
-    onSuccess: () => {
+    onSuccess: (data) => {
       message.success('User logged with success!');
 
-      setAuth(mutation.data?.jwt_token || '', mutation.data?.user_id || 0);
+      setAuth(data.jwt_token, data.user_id);
 
       navigate('/');
     },
@@ -24,6 +25,10 @@ export default function LoginPage() {
       message.error(`Error in login: ${Error.message}`);
     }
   })
+
+  if (jwt_token) {
+    return <Navigate to="/" replace />;
+  }
 
   const onFinish = (values: LoginRequest) => {
     mutation.mutate(values);

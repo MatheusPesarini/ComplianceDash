@@ -2,12 +2,15 @@ import { Card, Form, Button, Input, message } from 'antd';
 import { useMutation } from '@tanstack/react-query';
 import { CreateUser } from '../../services/auth/CreateUser';
 import type { RegisterRequest } from '../../types/Auth';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../stores/authStore';
 
 
 export default function RegisterPage() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+
+  const jwt_token = useAuthStore((state) => state.jwt_token);
 
   const mutation = useMutation({
     mutationFn: CreateUser,
@@ -20,6 +23,10 @@ export default function RegisterPage() {
       message.error(`Error in create: ${Error.message}`);
     }
   })
+
+  if (jwt_token) {
+    return <Navigate to="/" replace />
+  }
 
   const onFinish = (values: RegisterRequest) => {
     mutation.mutate(values);
