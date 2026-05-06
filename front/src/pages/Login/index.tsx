@@ -3,15 +3,20 @@ import { useMutation } from '@tanstack/react-query';
 import { LoginUser } from '../../services/auth/LoginUser';
 import type { LoginRequest } from '../../types/Auth';
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../stores/authStore';
 
 export default function LoginPage() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
+  const setAuth = useAuthStore((state) => state.setAuth);
+
   const mutation = useMutation({
     mutationFn: LoginUser,
     onSuccess: () => {
       message.success('User logged with success!');
+
+      setAuth(mutation.data?.jwt_token || '', mutation.data?.user_id || 0);
 
       navigate('/');
     },

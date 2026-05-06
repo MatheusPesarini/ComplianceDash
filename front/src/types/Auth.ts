@@ -18,6 +18,7 @@ export type LoginRequest = {
 export type LoginResponse = {
   successful: boolean;
   error_message?: string
+  jwt_token: string;
   user_id: number;
-  access_token: string;
+  is_admin: boolean;
 }

@@ -7,6 +7,7 @@ import AuthLayout from './layouts/AuthLayout'
 import LoginPage from './pages/Login/index.tsx'
 import RegisterPage from './pages/Register/index.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import ProtectedRoute from './layouts/ProtectedRoute.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,8 +21,6 @@ const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <App />,
     errorElement: <div>Page not found</div>,
     children: [
       {
@@ -31,6 +30,15 @@ const router = createBrowserRouter([
 
           { path: 'register', element: <RegisterPage /> },
         ]
+      }
+    ]
+  },
+  {
+    errorElement: <div>Page not found</div>,
+    element: <ProtectedRoute />,
+    children: [
+      {
+        element: <App />
       }
     ]
   }
