@@ -31,9 +31,8 @@ def login_user(user_in: UserLogin, db: Session = Depends(get_db)):
         
         token = create_acess_token({"sub": str(user.id)})
         
-        return UserLoginResponse(successful=True, token=token, user_id=str(user.id))
+        return UserLoginResponse(successful=True, jwt_token=token, user_id=str(user.id), is_admin=user.is_admin)
     except ValueError as e:
-        # ValueError = "Credenciais inválidas"
         return UserLoginResponse(successful=False, error_message=str(e))
     except Exception as e:
         return UserLoginResponse(successful=False, error_message=str(e))
