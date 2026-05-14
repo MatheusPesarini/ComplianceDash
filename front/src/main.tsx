@@ -11,6 +11,7 @@ import { ConfigProvider, theme } from "antd"
 import ptBR from "antd/locale/pt_BR"
 import UserPage from './pages/User/index.tsx'
 import AdminPage from './pages/Admin/index.tsx'
+import RouteDispatcher from './layouts/RouteDispatcher.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
     errorElement: <div>Page not found</div>,
     element: <ProtectedRoute />,
     children: [
+      { path: '/', element: <RouteDispatcher /> },
       { path: 'user', element: <UserPage /> },
       { path: 'admin', element: <AdminPage /> },
     ]
