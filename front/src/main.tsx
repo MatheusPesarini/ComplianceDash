@@ -1,17 +1,16 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import AuthLayout from './layouts/AuthLayout'
 import LoginPage from './pages/Login/index.tsx'
 import RegisterPage from './pages/Register/index.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import ProtectedRoute from './layouts/ProtectedRoute.tsx'
-
-// IMPORTADOS DAQUI
 import { ConfigProvider, theme } from "antd"
 import ptBR from "antd/locale/pt_BR"
+import UserPage from './pages/User/index.tsx'
+import AdminPage from './pages/Admin/index.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,9 +39,8 @@ const router = createBrowserRouter([
     errorElement: <div>Page not found</div>,
     element: <ProtectedRoute />,
     children: [
-      {
-        element: <App />
-      }
+      { path: 'user', element: <UserPage /> },
+      { path: 'admin', element: <AdminPage /> },
     ]
   }
 ])
