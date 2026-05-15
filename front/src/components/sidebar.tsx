@@ -1,8 +1,9 @@
-import Sider from "antd/lib/layout/Sider";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../stores/authStore";
-import { Menu } from "antd";
+import { Menu, Layout } from "antd";
 import { CheckSquareOutlined, HomeOutlined, LogoutOutlined } from "@ant-design/icons";
+
+const { Sider } = Layout;
 
 export default function Sidebar() {
   const navigate = useNavigate();

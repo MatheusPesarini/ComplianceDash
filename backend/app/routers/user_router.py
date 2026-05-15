@@ -31,6 +31,8 @@ def login_user(user_in: UserLogin, db: Session = Depends(get_db)):
         
         token = create_acess_token({"sub": str(user.id)})
         
+        print({"token": token, "user_id": user.id, "is_admin": user.is_admin})
+        
         return UserLoginResponse(successful=True, jwt_token=token, user_id=str(user.id), is_admin=user.is_admin)
     except ValueError as e:
         return UserLoginResponse(successful=False, error_message=str(e))
