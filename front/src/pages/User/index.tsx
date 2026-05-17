@@ -1,26 +1,24 @@
-import { Breadcrumb } from "antd";
-import { Content, Footer, Header } from "antd/es/layout/layout";
+import { Breadcrumb, theme } from "antd";
+import { Content } from "antd/es/layout/layout";
 
 export default function UserPage() {
+  const {
+    token: { borderRadiusLG }
+  } = theme.useToken();
+
   return (
     <>
-      <Header style={{ padding: 0 }} />
-      <Content style={{ margin: '0 16px' }}>
-        <Breadcrumb style={{ margin: '16px 0' }} items={[{ title: 'User' }, { title: 'Bill' }]} />
-        <div
-          style={{
-            padding: 24,
-            minHeight: 360,
-            // background: colorBgContainer,
-            // borderRadius: borderRadiusLG,
-          }}
-        >
-          Bill is a cat.
-        </div>
+      <Breadcrumb style={{ margin: '16px 0' }} items={[{ title: 'User' }, { title: 'Bill' }]} />
+      <Content
+        style={{
+          padding: 24,
+          minHeight: 360,
+          background: '#192734',
+          borderRadius: borderRadiusLG,
+        }}
+      >
+        Bill is a cat.
       </Content>
-      <Footer style={{ textAlign: 'center' }}>
-        Ant Design Created by Ant UED
-      </Footer>
     </>
   )
 }

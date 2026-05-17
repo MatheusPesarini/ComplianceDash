@@ -60,13 +60,14 @@ createRoot(document.getElementById('root')!).render(
       <ConfigProvider
         locale={ptBR}
         theme={{
-          algorithm: theme.darkAlgorithm, // não esqueça o darkAlgorithm
+          algorithm: theme.darkAlgorithm,
           token: {
             colorPrimary: '#1677ff',
             colorBgContainer: '#192734',
             colorText: '#E0E0E0',
             colorSplit: '#e0e0e0',
-            colorTextPlaceholder: '#e0e0e079'
+            colorTextPlaceholder: '#e0e0e079',
+            borderRadiusLG: 8,
           },
           components: {
             Card: {
@@ -78,6 +79,9 @@ createRoot(document.getElementById('root')!).render(
             },
             Button: {
               primaryShadow: 'none'
+            },
+            Layout: {
+              colorBgHeader: '#192734',
             }
           }
         }}

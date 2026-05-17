@@ -8,12 +8,12 @@ export default function BaseLayout() {
     <Layout style={{ minHeight: '100vh' }}>
       <Sidebar />
       <Layout>
-        <Header style={{ padding: 0, background: '#fff' }} />
-        <Content style={{ margin: '0 16px', display: 'flex', flexDirection: 'column' }}>
+        <Header style={{ padding: 0 }} />
+        <Content style={{ margin: '0 16px' }}>
           <Outlet />
         </Content>
         <Footer style={{ textAlign: 'center' }}>
-          ComplianceDash ©2026 - Data Subject Portal
+          ComplianceDash ©2026 - User Portal
         </Footer>
       </Layout>
     </Layout>

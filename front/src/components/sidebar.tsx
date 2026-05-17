@@ -1,20 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../stores/authStore";
-import { Menu, Layout } from "antd";
-import { CheckSquareOutlined, HomeOutlined, LogoutOutlined } from "@ant-design/icons";
+import { Menu, Layout, Button } from "antd";
+import { CheckSquareOutlined, DoubleRightOutlined, HomeOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 const { Sider } = Layout;
 
 export default function Sidebar() {
+  const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const logout = useAuthStore((state) => state.logout);
 
   return (
-    <Sider width={250} theme="dark" style={{ background: '#192734' }}>
-      <div style={{ padding: '20px', color: '#E0E0E0', textAlign: 'center', fontSize: '20px', fontWeight: 'bold' }}>
-        Sidebar
+    <Sider trigger={null} collapsible collapsed={collapsed}>
+      <div style={{ height: 64, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 24, color: 'white', gap: 8 }}>
+        <DoubleRightOutlined />
+        <DoubleRightOutlined />
       </div>
-
       <Menu
         theme="dark"
         mode="inline"
@@ -40,6 +42,20 @@ export default function Sidebar() {
             style: { marginTop: 'auto' }
           },
         ]}
+      />
+      <Button
+        type="text"
+        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        onClick={() => setCollapsed(!collapsed)}
+        style={{
+          fontSize: '20px',
+          width: 64,
+          height: 64,
+          position: 'absolute',
+          bottom: '16px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+        }}
       />
     </Sider>
   )

@@ -53,9 +53,15 @@ export default function RegisterPage() {
           </Form.Item>
 
           <Form.Item label={null}>
-            <Button type='primary' htmlType='submit' loading={mutation.isPending}>
-              Submit
-            </Button>
+            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+              <Button type="primary" htmlType="submit" loading={mutation.isPending}>
+                Submit
+              </Button>
+
+              <Button type="link" htmlType="button" onClick={() => navigate('/login')}>
+                Already have an account? Login
+              </Button>
+            </div>
           </Form.Item>
         </Form>
       </Card>

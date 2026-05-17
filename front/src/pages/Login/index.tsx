@@ -17,7 +17,7 @@ export default function LoginPage() {
     onSuccess: (data) => {
       message.success('User logged with success!');
 
-      setAuth(data.jwt_token, data.user_id);
+      setAuth(data.jwt_token, data.user_id, data.is_admin);
 
       navigate('/');
     },
@@ -51,9 +51,14 @@ export default function LoginPage() {
           </Form.Item>
 
           <Form.Item label={null}>
-            <Button type='primary' htmlType='submit' loading={mutation.isPending}>
-              Submit
-            </Button>
+            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+              <Button type='primary' htmlType='submit' loading={mutation.isPending}>
+                Submit
+              </Button>
+              <Button type='link' htmlType='button' onClick={() => navigate('/register')}>
+                Don't have an account?
+              </Button>
+            </div>
           </Form.Item>
         </Form>
       </Card>
