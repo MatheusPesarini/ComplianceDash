@@ -10,6 +10,11 @@ class PrivacyRequestBase(BaseModel):
 class PrivacyRequestCreate(PrivacyRequestBase):
     pass
 
+class PrivacyRequestCreateResponse(PrivacyRequestBase):
+    id: int
+    status: RequestStatus
+    created_at: datetime
+    
 class PrivacyRequestUpdate(BaseModel):
     status: Optional[RequestStatus] = None
     admin_notes: Optional[str] = None

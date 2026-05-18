@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from typing import List, Optional
-from datetime import datetime
 from app.models.privacy_request_model import PrivacyRequest
 from app.schemas.privacy_request_schema import PrivacyRequestCreate, PrivacyRequestUpdate
 

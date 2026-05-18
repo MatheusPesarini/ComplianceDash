@@ -7,7 +7,7 @@ from app.schemas.privacy_request_schema import PrivacyRequest, PrivacyRequestCre
 from app.services.privacy_request_service import PrivacyRequestService
 from app.core.token_jwt import get_current_user
 
-router = APIRouter(prefix="/privacy-requests", tags=["Privacy Requests"])
+router = APIRouter(prefix="/api/privacy-requests", tags=["Privacy Requests"])
 
 @router.post("/", response_model=PrivacyRequest, status_code=status.HTTP_201_CREATED)
 def create_request(
@@ -26,13 +26,13 @@ def read_my_requests(
     service = PrivacyRequestService(db)
     return service.get_user_requests(current_user.id)
 
-@router.get("/", response_model=List[PrivacyRequest])
-def read_all_requests(
-    db: Session = Depends(get_db),
-    current_user: dict = Depends(get_current_user)
-):
-    service = PrivacyRequestService(db)
-    return service.get_all_requests()
+# @router.get("/", response_model=List[PrivacyRequest])
+# def read_all_requests(
+#     db: Session = Depends(get_db),
+#     current_user: dict = Depends(get_current_user)
+# ):
+#     service = PrivacyRequestService(db)
+#     return service.get_all_requests()
 
 @router.get("/{request_id}", response_model=PrivacyRequest)
 def read_request(
