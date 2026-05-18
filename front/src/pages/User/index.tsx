@@ -9,7 +9,7 @@ export default function UserPage() {
 
   return (
     <>
-      <Breadcrumb style={{ margin: '16px 0' }} items={[{ title: 'User Painel' }, { title: 'Dashboard' }]} />
+      <Breadcrumb style={{ margin: '16px 0' }} items={[{ title: 'User Panel' }, { title: 'Dashboard' }]} />
       <Content
         style={{
           padding: 24,

@@ -9,7 +9,8 @@ const { Sider } = Layout;
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
-  const logout = useAuthStore((state) => state.logout);
+  const logout = useAuthStore(state => state.logout);
+  const isAdmin = useAuthStore(state => state.is_admin);
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -17,32 +18,61 @@ export default function Sidebar() {
         <DoubleRightOutlined />
         <DoubleRightOutlined />
       </div>
-      <Menu
-        theme="dark"
-        mode="inline"
-        style={{ background: 'transparent' }}
-        items={[
-          {
-            key: '1',
-            icon: <HomeOutlined />,
-            label: 'Dashboard',
-            onClick: () => navigate('/')
-          },
-          {
-            key: '2',
-            icon: <CheckSquareOutlined />,
-            label: 'Tarefas',
-            onClick: () => navigate('/tarefas')
-          },
-          {
-            key: '3',
-            icon: <LogoutOutlined />,
-            label: 'Sair',
-            onClick: () => logout(),
-            style: { marginTop: 'auto' }
-          },
-        ]}
-      />
+      {isAdmin ?
+        <Menu
+          theme="dark"
+          mode="inline"
+          style={{ background: 'transparent' }}
+          items={[
+            {
+              key: '1',
+              icon: <HomeOutlined />,
+              label: 'Dashboard',
+              onClick: () => navigate('/')
+            },
+            {
+              key: '2',
+              icon: <CheckSquareOutlined />,
+              label: 'Requests',
+              onClick: () => navigate('/admin-requests')
+            },
+            {
+              key: '3',
+              icon: <LogoutOutlined />,
+              label: 'Sair',
+              onClick: () => logout(),
+              style: { marginTop: 'auto' }
+            },
+          ]}
+        />
+        :
+        <Menu
+          theme="dark"
+          mode="inline"
+          style={{ background: 'transparent' }}
+          items={[
+            {
+              key: '1',
+              icon: <HomeOutlined />,
+              label: 'Dashboard',
+              onClick: () => navigate('/user')
+            },
+            {
+              key: '2',
+              icon: <CheckSquareOutlined />,
+              label: 'Requests',
+              onClick: () => navigate('/user-requests')
+            },
+            {
+              key: '3',
+              icon: <LogoutOutlined />,
+              label: 'Sair',
+              onClick: () => logout(),
+              style: { marginTop: 'auto' }
+            },
+          ]}
+        />
+      }
       <Button
         type="text"
         icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}

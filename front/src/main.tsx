@@ -14,9 +14,9 @@ import AdminPage from './pages/Admin/index.tsx'
 import RouteDispatcher from './layouts/RouteDispatcher.tsx'
 import BaseLayout from './layouts/BaseLayout.tsx'
 import RequireUser from './layouts/RequireUser.tsx'
-import UserTasks from './pages/UserTasks/index.tsx'
 import RequireAdmin from './layouts/RequireAdmin.tsx'
-import AdminTasks from './pages/AdminTasks/index.tsx'
+import UserRequests from './pages/UserRequests/index.tsx'
+import AdminRequests from './pages/AdminRequests/index.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,14 +54,14 @@ const router = createBrowserRouter([
             element: <RequireUser />,
             children: [
               { path: 'user', element: <UserPage /> },
-              { path: 'user-tasks', element: <UserTasks /> }
+              { path: 'user-requests', element: <UserRequests /> }
             ]
           },
           {
             element: <RequireAdmin />,
             children: [
               { path: 'admin', element: <AdminPage /> },
-              { path: 'admin-tasks', element: <AdminTasks /> }
+              { path: 'admin-requests', element: <AdminRequests /> }
             ]
           }
         ]

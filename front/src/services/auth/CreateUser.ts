@@ -10,7 +10,7 @@ export async function CreateUser(data: RegisterRequest): Promise<RegisterRespons
   })
 
   if (!response.ok) {
-    throw new Error('Erro ao criar usuário');
+    throw new Error('Error creating user');
   }
 
   return response.json();
