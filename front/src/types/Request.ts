@@ -1,4 +1,4 @@
-export type CreatePrivacyRequest = {
+export type CreatePrivacyRequestType = {
   type: 'access' | 'deletion' | 'correction' | 'portability' | 'opt_out';
   details: string;
 }
